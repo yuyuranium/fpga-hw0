@@ -11,6 +11,7 @@ output reg [6:0] res
     );
 
 wire w1, w2, w3, w4, w5, w6;
+reg [6:0] next_res, tmp;
 
 //mode==01
 and g1(w1, A, B);
@@ -22,30 +23,26 @@ and g4(w4, A, ~B, C);
 and g5(w5, A, B, ~C);
 or g6(w6, w3, w4, w5);
 
+always@(*)begin
+    case(mode)
+        2'd0:tmp = A;
+        2'd1:tmp = w1;
+        2'd2:tmp = w2;
+        2'd3:tmp = w6;
+    endcase
+    next_res = res + tmp;
+end
+
 always@(posedge clk, posedge rst)begin
-if(rst || !en)begin
+if(rst || en)begin
     res <= 0;
 end
 else begin
     if (analyze_en) begin
-        case(mode)
-           2'd0:begin
-               res <= res + A;
-           end
-           2'd1:begin
-               res <= res + w1;
-           end
-           2'd2:begin
-               res <= res + w2;
-           end
-           2'd3:begin
-               res <= res + w6;
-           end
-    endcase
+        res <= next_res;
     end
     else res <= res;
 end
 end
-
 
 endmodule
