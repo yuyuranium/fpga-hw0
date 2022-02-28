@@ -21,9 +21,9 @@ module SET (
     wire a, b, c;
     wire analyze_en;
 
-    /* Registers for central and radius of A, B and C */
+    /* Registers for mode, central and radius of A, B and C */
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst || en) begin
             x_a <= 3'd0;
             y_a <= 3'd0;
             x_b <= 3'd0;
