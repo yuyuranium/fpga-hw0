@@ -7,11 +7,11 @@ input [1:0] mode,
 input A,
 input B,
 input C,
-output reg [6:0] res
+output reg [7:0] res
     );
 
 wire w1, w2, w3, w4, w5, w6;
-reg [6:0] next_res, tmp;
+reg [7:0] next_res, tmp;
 
 //mode==01
 and g1(w1, A, B);
