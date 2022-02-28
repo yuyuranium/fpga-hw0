@@ -16,6 +16,7 @@ module SET (
 
     reg  [3:0] x_a, y_a, x_b, y_b, x_c, y_c;
     reg  [3:0] r_a, r_b, r_c;
+    reg  [1:0] mode_q;
     wire [1:0] stage;
     wire [3:0] x, y;
     wire a, b, c;
@@ -23,7 +24,7 @@ module SET (
 
     /* Registers for mode, central and radius of A, B and C */
     always @(posedge clk or posedge rst) begin
-        if (rst || en) begin
+        if (rst) begin
             x_a <= 3'd0;
             y_a <= 3'd0;
             x_b <= 3'd0;
@@ -33,6 +34,7 @@ module SET (
             r_a <= 3'd0;
             r_b <= 3'd0;
             r_c <= 3'd0;
+            mode_q <= 2'b00;
         end else begin
             if (en) begin
                 x_a <= central[23:20];
@@ -44,6 +46,18 @@ module SET (
                 r_a <= radius[11:8];
                 r_b <= radius[7:4];
                 r_c <= radius[3:0];
+                mode_q <= mode;
+            end else begin
+                x_a <= x_a;
+                y_a <= y_a;
+                x_b <= x_b;
+                y_b <= y_b;
+                x_c <= x_c;
+                y_c <= y_c;
+                r_a <= r_a;
+                r_b <= r_b;
+                r_c <= r_c;
+                mode_q = mode_q;
             end
         end
     end
@@ -100,7 +114,7 @@ module SET (
         .rst(rst),
         .en(en),
         .analyze_en(analyze_en),
-        .mode(mode),
+        .mode(mode_q),
         .A(a),
         .B(b),
         .C(c),
