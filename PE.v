@@ -46,9 +46,9 @@ always@(*)begin
             data4 = r;
         end
         2'd3:begin
-            PE_mode = 0;
+            PE_mode = 1;
             data1 = reg3;
-            data2 = reg1;
+            data2 = ~reg1;
         end
         endcase
 end
@@ -60,7 +60,7 @@ end
 else begin
     if(stage == 2'd0) begin // (x-x1)^2
         reg1 <= tmp1; 
-        res <=0;
+        res <= 0;
     end
     else if(stage == 2'd1) begin  // (y-y1)^2
         reg2 <= tmp1;
