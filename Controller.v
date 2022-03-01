@@ -85,7 +85,7 @@ always@(posedge clk or posedge rst)begin
     end
 end
 always@(*)begin
-    if(state)begin
+    if(state==ANALYZE)begin
         if(coordinate_x==4'd8 &&coordinate_y==4'd8)begin
             next_x=4'd1;
             next_y=4'd1;
