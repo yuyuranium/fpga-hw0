@@ -1,3 +1,9 @@
+# Waveform files
+*.vcd
+
+# Editor settings
+.vimrc
+
 # Prerequisites
 *.d
 
