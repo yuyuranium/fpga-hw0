@@ -1,5 +1,6 @@
 module Controller( clk,
                    rst,
+                   en,
                    busy,
                    x,
                    y,
@@ -9,18 +10,20 @@ module Controller( clk,
                  );
 
 input clk,rst;
-output busy;
+input en;
+output reg busy;
 output [3:0] x,y;
 output [1:0] stage;
 output analyze_en;
 output valid;
 
-parameter IDLE=2'd0,
-          PROCESS=2'd1,
-          ANALYZE=2'd2,
-          DONE=2'd3;
+parameter IDLE=3'd0,
+          RECV=3'd1,
+          PROCESS=3'd2,
+          ANALYZE=3'd3,
+          DONE=3'd4;
 
-reg [1:0] state, n_state;
+reg [2:0] state, n_state;
 reg [3:0] coordinate_x, coordinate_y;
 reg [3:0] next_x,next_y;
 reg [1:0] process_cnt, next_cnt;
@@ -31,7 +34,6 @@ assign x=coordinate_x;
 assign y=coordinate_y;
 assign analyze_en=(state==ANALYZE)?1'b1:1'b0; // if analyze enable then do accumulate
 assign stage=process_cnt; //process stage
-assign busy=(state==IDLE)?1'b0:1'b1; //busy signal
 assign valid=(state==DONE)?1'b1:1'b0; //valid signal
 
 // FSM
@@ -46,6 +48,14 @@ end
 always@(*)begin
     case(state)
         IDLE:begin
+            if(en)begin
+                n_state=RECV;
+            end
+            else begin
+                n_state=IDLE;
+            end
+        end
+        RECV:begin
             n_state=PROCESS;
         end
         PROCESS:begin
@@ -128,6 +138,28 @@ always@(*)begin
     end
 end
 
+always@(*)begin
+    case(state)
+        IDLE:begin
+            busy=1'b0;
+        end
+        RECV:begin
+            busy=1'b0;
+        end
+        PROCESS:begin
+            busy=1'b1;
+        end
+        ANALYZE:begin
+            busy=1'b1;
+        end
+        DONE:begin
+            busy=1'b1;
+        end
+        default:begin
+            busy=1'b0;
+        end
+    endcase
+end
 
 
 endmodule

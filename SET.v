@@ -65,6 +65,7 @@ module SET (
     Controller ctrl(
         .clk(clk),
         .rst(rst),
+        .en(en),
         .busy(busy),
         .x(x),
         .y(y),
