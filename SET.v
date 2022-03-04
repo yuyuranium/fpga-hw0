@@ -25,15 +25,15 @@ module SET (
     /* Registers for mode, central and radius of A, B and C */
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            x_a <= 3'd0;
-            y_a <= 3'd0;
-            x_b <= 3'd0;
-            y_b <= 3'd0;
-            x_c <= 3'd0;
-            y_c <= 3'd0;
-            r_a <= 3'd0;
-            r_b <= 3'd0;
-            r_c <= 3'd0;
+            x_a <= 4'd0;
+            y_a <= 4'd0;
+            x_b <= 4'd0;
+            y_b <= 4'd0;
+            x_c <= 4'd0;
+            y_c <= 4'd0;
+            r_a <= 4'd0;
+            r_b <= 4'd0;
+            r_c <= 4'd0;
             mode_q <= 2'b00;
         end else begin
             if (en) begin
@@ -57,69 +57,69 @@ module SET (
                 r_a <= r_a;
                 r_b <= r_b;
                 r_c <= r_c;
-                mode_q = mode_q;
+                mode_q <= mode_q;
             end
         end
     end
 
     Controller ctrl(
-        .clk(clk),
-        .rst(rst),
-        .en(en),
-        .busy(busy),
-        .x(x),
-        .y(y),
-        .stage(stage),
+        .clk       (clk),
+        .rst       (rst),
+        .en        (en),
+        .busy      (busy),
+        .x         (x),
+        .y         (y),
+        .stage     (stage),
         .analyze_en(analyze_en),
-        .valid(valid)
+        .valid     (valid)
     );
 
     PE pe_a(
-        .clk(clk),
-        .rst(rst),
+        .clk  (clk),
+        .rst  (rst),
         .stage(stage),
-        .x(x),
-        .y(y),
-        .x1(x_a),
-        .y1(y_a),
-        .r(r_a),
-        .res(a)
+        .x    (x),
+        .y    (y),
+        .x1   (x_a),
+        .y1   (y_a),
+        .r    (r_a),
+        .res  (a)
     );
 
     PE pe_b(
-        .clk(clk),
-        .rst(rst),
+        .clk  (clk),
+        .rst  (rst),
         .stage(stage),
-        .x(x),
-        .y(y),
-        .x1(x_b),
-        .y1(y_b),
-        .r(r_b),
-        .res(b)
+        .x    (x),
+        .y    (y),
+        .x1   (x_b),
+        .y1   (y_b),
+        .r    (r_b),
+        .res  (b)
     );
 
     PE pe_c(
-        .clk(clk),
-        .rst(rst),
+        .clk  (clk),
+        .rst  (rst),
         .stage(stage),
-        .x(x),
-        .y(y),
-        .x1(x_c),
-        .y1(y_c),
-        .r(r_c),
-        .res(c)
+        .x    (x),
+        .y    (y),
+        .x1   (x_c),
+        .y1   (y_c),
+        .r    (r_c),
+        .res  (c)
     );
 
     Analyzer analyzer(
-        .clk(clk),
-        .rst(rst),
-        .en(en),
+        .clk       (clk),
+        .rst       (rst),
+        .en        (en),
         .analyze_en(analyze_en),
-        .mode(mode_q),
-        .A(a),
-        .B(b),
-        .C(c),
-        .res(candidate)
+        .mode      (mode_q),
+        .A         (a),
+        .B         (b),
+        .C         (c),
+        .res       (candidate)
     );
 
 endmodule
