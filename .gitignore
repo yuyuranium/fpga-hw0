@@ -1,3 +1,7 @@
+# linter config
+.svlint.toml
+.svls.toml
+
 # Waveform files
 *.vcd
 
