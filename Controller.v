@@ -144,7 +144,7 @@ always@(*)begin
             busy=1'b0;
         end
         RECV:begin
-            busy=1'b0;
+            busy=1'b1;
         end
         PROCESS:begin
             busy=1'b1;
