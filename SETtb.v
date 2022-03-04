@@ -66,7 +66,6 @@ module testbench;
     central = 24'd0;
     radius = 12'd0;
     mode = 2'd0;
-    #10  /* HOT-FIX: Add this line so that the simulation could be correct */
 
 
     //transmit the second signal about central, radius, and mode
