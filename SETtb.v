@@ -78,6 +78,15 @@ module testbench;
       end
     end
 
+    wait (busy == 1'b0) begin
+      @(negedge clk) begin
+        en = 1'b1;
+        central = 24'b0101_0101_0011_0011_0110_0010;
+        radius = 12'b0011_0011_0010;
+        mode = 2'b01;
+      end
+    end
+
     #10 en = 1'b0;
     central = 24'd0;
     radius = 12'd0;
