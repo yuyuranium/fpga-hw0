@@ -86,6 +86,7 @@ module testbench;
         mode = 2'b01;
       end
     end
+    // 111
 
     #10 en = 1'b0;
     central = 24'd0;
